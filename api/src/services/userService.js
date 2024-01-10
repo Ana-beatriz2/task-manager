@@ -3,8 +3,8 @@ const { v4 } = require("uuid")
 const bcrypt = require("bcryptjs")
 const Joi = require("joi");
 
-module.exports = {
-    async getOneUser(id){
+class UserService {
+    static async getOneUser(id){
         const user = await knex("user").select("id", "name", "email").where({id}).first();
 
         if (!user){
@@ -12,14 +12,14 @@ module.exports = {
         }
 
         return user;
-    },
+    }
 
-    async getAllUsers(){
+    static async getAllUsers(){
         const users = await knex("user").select("id", "name", "email");
         return users; 
-    },
+    }
 
-    async createUser(name, email, password){
+    static async createUser(name, email, password){
         const userValidation = Joi.object({
             name: Joi.string().min(3).required(),
             email: Joi.string().email().required(),
@@ -28,7 +28,7 @@ module.exports = {
 
         const { error } = userValidation.validate({name, email, password});
 
-        if (error){throw new Error(error.message)}
+        if (error){throw new Error(`Informações de cadastro inválidas - ${error.message}`)}
 
         const user = await knex("user").select("id").where({email}).first();
 
@@ -44,10 +44,9 @@ module.exports = {
         })
 
         return "Usuário criado com sucesso!";
-        
-    },
+    }
 
-    async updateUser(id, userData){
+    static async updateUser(id, userData){
         const userUpdateValidation = Joi.object({
             name: Joi.string().min(3),
             password: Joi.string().min(6).pattern(new RegExp("[A-z0-9]"))
@@ -74,9 +73,9 @@ module.exports = {
         await knex("user").where({id}).update(userData)
 
         return "Alteração realizada com sucesso!";
-    },
+    }
 
-    async deleteUser(id){
+    static async deleteUser(id){
         const user = await this.getOneUser(id);
 
         if (!user){
@@ -88,3 +87,6 @@ module.exports = {
         return "Usuário excluido com sucesso!";
     }
 }
+
+
+module.exports = UserService;
