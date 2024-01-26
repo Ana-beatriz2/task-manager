@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const UserController = require("./controllers/userController")
 const AuthController = require("./controllers/authController");
+const TaskController = require("./controllers/taskController");
 const auth = require("./middleware/auth");
 
 router
@@ -9,6 +10,7 @@ router
 
     .post("/user", UserController.createUser)
     .post("/login", AuthController.login)
+    .post("/task", auth, TaskController.createTask)
 
     .patch("/user/:id", UserController.updateUser)
 
