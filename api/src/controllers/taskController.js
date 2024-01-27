@@ -2,19 +2,21 @@ const TaskService = require("../services/taskService");
 
 
 class TaskController {
-    static async getOneTask(req, res){
+    static async getTask(req, res){
+        const { id } = req.params;
+        const userId = req.user_id;
+        let response;
+
         try{
+            if (id){
+                response = await TaskService.getOneTask(userId, id);
+            } else{
+                response = await TaskService.getAllUserTasks(userId);
+            }
             
+            return res.status(200).json(response);
         } catch (error){
-
-        }
-    }
-
-    static async getAllUserTasks(req, res){
-        try{
-            
-        } catch (error){
-
+            return res.status(400).json({message: error.message});
         }
     }
 

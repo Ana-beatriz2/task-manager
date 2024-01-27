@@ -1,14 +1,43 @@
 const knex = require("../database");
 const { v4 } = require("uuid")
 const Joi = require("joi");
+const moment = require("moment")
+
+function convertDate(date){
+    return moment(date).locale("pt").format("HH:mm:ss [às] DD/MM/YYYY");
+}
 
 class TaskService {
     static async getOneTask(userId, taskId){
+        const task = await knex("task").select("*").where({id: taskId}).first();
 
+        if (!task){throw new Error("Tarefa não encontrada!")}
+
+        if (task.user_id != userId){throw new Error("Essa tarefa não pertence a você!")}
+
+        const deadline = task.deadline
+
+        if (deadline){
+            task.deadline = convertDate(deadline);
+        }
+
+        return task;
     }
 
     static async getAllUserTasks(userId){
+        const tasks = await knex("task").select("*").where({user_id: userId});
 
+        if (!tasks.length){return "Nenhuma tarefa foi encontrada!"}
+
+        tasks.forEach(task => {
+            let deadline = task.deadline;
+
+            if (deadline){
+                task.deadline = convertDate(deadline)
+            }
+        })
+
+        return tasks;
     }
 
     static async getTaskByName(userId, taskName){

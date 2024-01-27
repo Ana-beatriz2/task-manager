@@ -6,7 +6,8 @@ const TaskController = require("./controllers/taskController");
 const auth = require("./middleware/auth");
 
 router
-    .get("/user/:id?", UserController.getUser)
+    .get("/user/:id?", auth, UserController.getUser)
+    .get("/task/:id?", auth, TaskController.getTask)
 
     .post("/user", UserController.createUser)
     .post("/login", AuthController.login)
