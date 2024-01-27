@@ -41,18 +41,28 @@ class TaskController {
     }
 
     static async updateTask(req, res){
-        try{
-            
-        } catch (error){
+        const data = req.body;
+        const userId = req.user_id;
+        const { id } = req.params;
+        console.log(data)
 
+        try{
+            const response = await TaskService.updateTask(userId, id, data);
+            return res.status(200).json(response);
+        } catch (error){
+            return res.status(400).json({message: error.message});
         }
     }
 
     static async deleteTask(req, res){
-        try{
-            
-        } catch (error){
+        const { id } = req.params;
+        const userId = req.user_id;
 
+        try{
+            const response = await TaskService.deleteTask(id, userId);
+            return res.status(200).json(response);    
+        } catch (error){
+            return res.status(400).json({message: error.message});
         }
     }
 }

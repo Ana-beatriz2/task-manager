@@ -13,8 +13,10 @@ router
     .post("/login", AuthController.login)
     .post("/task", auth, TaskController.createTask)
 
-    .patch("/user/:id", UserController.updateUser)
+    .patch("/user/:id", auth, UserController.updateUser)
+    .patch("/task/:id", auth, TaskController.updateTask)
 
-    .delete("/user/:id", UserController.deleteUser)
+    .delete("/user/:id", auth, UserController.deleteUser)
+    .delete("/task/:id", auth, TaskController.deleteTask)
 
 module.exports = router;
