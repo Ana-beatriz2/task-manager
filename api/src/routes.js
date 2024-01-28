@@ -6,6 +6,7 @@ const TaskController = require("./controllers/taskController");
 const auth = require("./middleware/auth");
 
 router
+    .get("/task/busca", auth, TaskController.getTaskByName)
     .get("/user/:id?", auth, UserController.getUser)
     .get("/task/:id?", auth, TaskController.getTask)
 

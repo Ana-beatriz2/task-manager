@@ -21,10 +21,14 @@ class TaskController {
     }
 
     static async getTaskByName(req, res){
-        try{
-            
-        } catch (error){
+        const userId = req.user_id;
+        const { name } = req.query;
 
+        try{
+            const response = await TaskService.getTaskByName(userId, name);
+            return res.status(200).json(response);
+        } catch (error){
+            return res.status(400).json({message: error.message});
         }
     }
 

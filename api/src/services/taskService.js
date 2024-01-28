@@ -55,7 +55,19 @@ class TaskService {
     }
 
     static async getTaskByName(userId, taskName){
+        const task = await knex("task").select("*").where({name: taskName}).first();
 
+        if (!task){throw new Error("Tarefa não encontrada!")}
+
+        if (task.user_id != userId){throw new Error("Essa tarefa não pertence a você!")}
+
+        const deadline = task.deadline
+
+        if (deadline){
+            task.deadline = convertDate(deadline);
+        }
+
+        return task;
     }
 
     static async createTask(userId, name, deadline, description){
