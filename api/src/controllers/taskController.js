@@ -59,7 +59,6 @@ class TaskController {
         const data = req.body;
         const userId = req.user_id;
         const { id } = req.params;
-        console.log(data)
 
         try{
             const response = await TaskService.updateTask(userId, id, data);
