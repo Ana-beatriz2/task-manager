@@ -32,6 +32,17 @@ class TaskController {
         }
     }
 
+    static async getExpiredTasks(req, res){
+        const userId = req.user_id;
+
+        try{
+            const response = await TaskService.getExpiredTasks(userId);
+            return res.status(200).json(response);
+        } catch(error){
+            return res.status(400).json({message: error.message});
+        }
+    }
+
     static async createTask(req, res){
         const { name, deadline, description } = req.body;
         const userId = req.user_id;

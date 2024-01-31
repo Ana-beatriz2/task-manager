@@ -70,6 +70,15 @@ class TaskService {
         return task;
     }
 
+    static async getExpiredTasks(userId){
+        const today = new Date().toISOString();
+        
+        const userTasks = await knex("task").select("*").where('user_id', userId) 
+        .whereRaw('deadline < ?', [today]);
+        
+        return userTasks;
+    }
+
     static async createTask(userId, name, deadline, description){
         taskValidation(name, deadline, description);
 

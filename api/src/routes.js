@@ -9,6 +9,7 @@ router
     .get("/task/busca", auth, TaskController.getTaskByName)
     .get("/user/:id?", auth, UserController.getUser)
     .get("/task/:id?", auth, TaskController.getTask)
+    .get("/tasks", auth, TaskController.getExpiredTasks)
 
     .post("/user", UserController.createUser)
     .post("/login", AuthController.login)
