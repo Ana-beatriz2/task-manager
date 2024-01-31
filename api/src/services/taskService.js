@@ -6,21 +6,6 @@ const moment = require("moment")
 function convertDate(date){
     return moment(date).locale("pt").format("DD/MM/YYYY [às] HH:mm:ss");
 }
-
-function taskValidation(name, deadline, description) {
-    const taskValidation = Joi.object({
-        name: Joi.string().min(3).required(),
-        deadline: Joi.date().allow('', null),
-        description: Joi.string().allow('', null)
-    })
-
-    const { error } = taskValidation.validate({name, deadline, description})
-
-    if (error){throw new Error(`Informações inseridas inválidas - ${error.message}`)}
-
-    return;
-}
-
 class TaskService {
     static async getOneTask(userId, taskId){
         const task = await knex("task").select("*").where({id: taskId}).first();
@@ -80,7 +65,15 @@ class TaskService {
     }
 
     static async createTask(userId, name, deadline, description){
-        taskValidation(name, deadline, description);
+        const taskValidation = Joi.object({
+            name: Joi.string().min(3).required(),
+            deadline: Joi.date().allow('', null),
+            description: Joi.string().allow('', null)
+        })
+    
+        const { error } = taskValidation.validate({name, deadline, description})
+    
+        if (error){throw new Error(`Informações inseridas inválidas - ${error.message}`)}
 
         await knex("task").insert({
             id: v4(),
@@ -94,7 +87,15 @@ class TaskService {
     }
 
     static async updateTask(userId, taskId, taskData){
-        taskValidation(taskData.name, taskData.deadline, taskData.description);
+        const taskValidation = Joi.object({
+            name: Joi.string().min(3),
+            deadline: Joi.date(),
+            description: Joi.string()
+        })
+    
+        const { error } = taskValidation.validate(taskData);
+    
+        if (error){throw new Error(`Informações inseridas inválidas - ${error.message}`)}
 
         await this.getOneTask(userId, taskId);
 
