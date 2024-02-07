@@ -2,18 +2,22 @@ const UserService = require("../services/userService");
 
 class UserController {
     static async getUser(req, res){
-        const { id } = req.params;
+        const userId = req.user_id;
         
         try{
-            if (id) {
-                 const user = await UserService.getOneUser(id);
-                 return res.status(200).json(user)
-            }
-     
-            const users = await UserService.getAllUsers();
-            return res.status(200).json(users);
+            const user = await UserService.getUser(userId);
+            return res.status(200).json(user)
         } catch(error){
          return res.status(400).json({message: error.message});
+        }
+     }
+
+     static async getAllUsers(req, res){
+        try{
+            const users = await UserService.getAllUsers();
+            return res.status(200).json(users);
+        } catch (error){
+            return res.status(400).json({message: error.message});
         }
      }
  
@@ -30,10 +34,10 @@ class UserController {
 
      static async updateUser(req, res){
          const userData = req.body;
-         const { id } = req.params;
+         const userId = req.user_id;
  
          try{
-             const response = await UserService.updateUser(id, userData);
+             const response = await UserService.updateUser(userId, userData);
              return res.status(200).json({message: response})
          } catch(error){
              return res.status(400).json({message: error.message});
@@ -41,10 +45,10 @@ class UserController {
      }
 
      static async deleteUser(req, res){
-         const { id } = req.params;
+         const userId = req.user_id;
  
          try{
-             const response = await UserService.deleteUser(id);
+             const response = await UserService.deleteUser(userId);
              return res.status(200).json({message: response});
          } catch (error){
              return res.status(400).json({message: error.message});

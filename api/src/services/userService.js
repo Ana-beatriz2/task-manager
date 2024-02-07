@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs")
 const Joi = require("joi");
 
 class UserService {
-    static async getOneUser(id){
+    static async getUser(id){
         const user = await knex("user").select("id", "name", "email").where({id}).first();
 
         if (!user){
@@ -56,7 +56,7 @@ class UserService {
 
         if (error){throw new Error(error.message)}
 
-        const user = this.getOneUser(id);
+        const user = this.getUser(id);
 
         if (!user){
             throw new Error("Usuário não encontrado!");
@@ -76,7 +76,7 @@ class UserService {
     }
 
     static async deleteUser(id){
-        const user = await this.getOneUser(id);
+        const user = await this.getUser(id);
 
         if (!user){
             throw new Error("Usuário não encontrado!");
