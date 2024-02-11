@@ -14,7 +14,7 @@ id: código de identificação de cada registro do usuário.
 
 name: nome completo do usuário.
 
-email: endereço de email único associado a um indivíduo.
+email: endereço de email único associado a um indivíduo. Campo único
 
 password: senha associada a um usuário para fins de autenticação. Mínimo de 6 caracteres.
 ```
@@ -55,7 +55,7 @@ Entre as **vantagens** e **motivos de sua escolha** no projeto: omissão da quan
 Tem o propósito de esconder senhas criadas pelos usuários em forma de texto “puro” em dados criptografados, utilizando o algoritmo hash.  Essa é uma ferramenta segura para armazenar senhas no banco de dados e pode ser utilizada por qualquer linguagem
 
 *Critérios importantes*: 
-* O BCrypt usa o "salt" para adicionar aleatoriedade às senhas, gerando hashes únicos mesmo para senhas idênticas. Isso aumenta a segurança contra ataques de força bruta. Salt é uma sequência de caracteres, números ou termos adicionados antes da senha
+* O Bcrypt usa o "salt" para adicionar aleatoriedade às senhas, gerando hashes únicos mesmo para senhas idênticas. Isso aumenta a segurança contra ataques de força bruta. Salt é uma sequência de caracteres, números ou termos adicionados antes da senha
 * Ajusta o custo computacional através do parâmetro "saltRounds". Quanto maior esse valor, mais lento será o processamento para calcular o hash da senha, aumentando a segurança. O valor padrão é 10, mas escolher um valor mais alto pode atrasar ataques de força bruta, embora deva ser equilibrado para garantir uma verificação de login eficiente.
 
 > Joi
