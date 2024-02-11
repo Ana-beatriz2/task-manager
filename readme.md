@@ -1,3 +1,18 @@
+# Sumário
+
+- [Sobre o Projeto](#sobre-o-projeto)
+
+- [Modelagem do Banco de Dados](#modelagem-do-banco-de-dados)
+
+- [Dicionário de dados](#dicionário-de-dados)
+
+- [Tecnologias e Ferramentas](#tecnologias-e-ferramentas)
+
+- [Regras de negócio](#regras-de-negócio)
+
+- [Perspectivas Futuras ou Melhorias](#perspectivas-futuras-ou-melhorias)
+
+
 # Sobre o Projeto
 
 Consiste em um **gerenciador de tarefas com autenticação**, em que cada usuário pode ler, criar, editar e excluir uma atividade. Além disso, é possível estabelecer prazos para a conclusão das tarefas e visualizar aquelas que estão em atraso. O principal objetivo de seu desenvolvimento foi o estudo.
@@ -9,28 +24,17 @@ Consiste em um **gerenciador de tarefas com autenticação**, em que cada usuár
 
 *User*
 
-```
-id: código de identificação de cada registro do usuário.
-
-name: nome completo do usuário.
-
-email: endereço de email único associado a um indivíduo. Campo único
-
-password: senha associada a um usuário para fins de autenticação. Mínimo de 6 caracteres.
-```
+- **id:** Código de identificação de cada registro do usuário.
+- **name:** Nome completo do usuário.
+- **email:** Endereço de e-mail único associado a um indivíduo. Campo único.
+- **password:** Senha associada a um usuário para fins de autenticação. Mínimo de 6 caracteres.
 
 *Task*
 
-```
-id: código de identificação de cada registro de uma tarefa.
-
-name: nome da tarefa.
-
-deadline: prazo para realização de uma tarefa. Campo opcional.
-
-description: para fornecer uma explicação ou informação adicional sovbre uma tarefa. Campo opcional.
-
-```
+- **id:** Código de identificação de cada registro de uma tarefa.
+- **name:** Nome da tarefa.
+- **deadline:** Prazo para realização de uma tarefa. Campo opcional.
+- **description:** Para fornecer uma explicação ou informação adicional sobre uma tarefa. Campo opcional.
 
 ## Tecnologias e Ferramentas
 
@@ -74,3 +78,5 @@ Biblioteca para validação de dados com base em esquemas.
 ## Perspectivas Futuras ou Melhorias
 
 * **Refatorar o tratamento de erros**: utilizar middlewares e orientação a objetos para personalizar os erros e gerar status mais condizentes.
+
+[**Voltar ao início do README**](#sobre-o-projeto)
